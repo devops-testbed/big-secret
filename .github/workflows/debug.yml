@@ -18,3 +18,31 @@ jobs:
         run: echo '${{ toJSON(strategy) }}'
       - name: Dump matrix context
         run: echo '${{ toJSON(matrix) }}'
+      - name: Encode OpenAPI schema
+        id: encode
+        run: |
+          # Start the timer
+          start_time=$(date +%s)
+
+          # Decode the secret and save it to a file
+          echo "${{ secrets.API_SPEC }}" | base64 --decode > api_spec.yaml
+
+          # Log the size of the secret contents
+          size=$(wc -c <"api_spec.yaml")
+          echo "Size of the secret contents: $size bytes"
+
+          # Encode the file with base64
+          base64 -w 0 api_spec.yaml > api_spec.base64
+
+          # Calculate and print the time taken
+          end_time=$(date +%s)
+          time_taken=$((end_time - start_time))
+          echo "Time taken: $time_taken seconds"
+
+          # Set the size and time taken as output parameters
+          echo "::set-output name=size::$size"
+          echo "::set-output name=time_taken::$time_taken"
+      - name: Print summary
+        run: |
+          echo "Size of the secret contents: ${{ steps.encode.outputs.size }} bytes"
+          echo "Time taken to encode the schema: ${{ steps.encode.outputs.time_taken }} seconds"
