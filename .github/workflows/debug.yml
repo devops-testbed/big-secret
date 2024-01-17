@@ -23,6 +23,7 @@ jobs:
       - name: Encode the file with base64
         run: |
           base64 -w 0 api_spec.yaml > api_spec.base64 || echo "Encoding failed"
+          jq . api_spec.yaml > api_spec_pretty.yaml || echo "Pretty printing failed"
 
       - name: Set the size and time taken as output parameters
         run: |
@@ -32,4 +33,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: api-spec
-          path: api_spec.yaml
+          path: api_spec_pretty.yaml
