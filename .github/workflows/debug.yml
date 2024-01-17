@@ -40,8 +40,8 @@ jobs:
           echo "Time taken: $time_taken seconds"
 
           # Set the size and time taken as output parameters
-          echo "::set-output name=size::$size"
-          echo "::set-output name=time_taken::$time_taken"
+          echo "size=$size" >> $GITHUB_ENV
+          echo "time_taken=$time_taken" >> $GITHUB_ENV
       - name: Print summary
         run: |
           echo "Size of the secret contents: ${{ steps.encode.outputs.size }} bytes"
