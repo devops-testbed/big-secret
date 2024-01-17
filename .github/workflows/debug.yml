@@ -34,17 +34,36 @@ jobs:
         with:
           name: api-spec
           path: api_spec_pretty.yaml
-      - name: Calculate optimal MTU
-        run: |
-          mtu=1472
-          while true; do
-            if ping -c 1 -s $mtu -M do www.github.com; then
-              optimal_mtu=$((mtu + 28))
-              echo "Optimal MTU size: $optimal_mtu"
-              echo "optimal_mtu=$optimal_mtu" >> $GITHUB_STEP_SUMMARY
-              break
-            else
-              ((mtu -= 10))
-              echo "try mtu=$mtu"
-            fi
-          done
+      # - name: Use Curl to get optimal MTU in a loop
+      #   run: |
+      #     mtu=1472
+      #     url="https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.0/schema.json"
+      #     optimal_mtu=0
+      #     shortest_time=9999999999
+      #     while [ $mtu -ge 1000 ]; do
+      #       #sudo ifconfig eth0 mtu $mtu
+      #       start_time=$(date +%s%N)
+      #       curl -o /dev/null $url
+      #       end_time=$(date +%s%N)
+      #       download_time=$((end_time - start_time))
+      #       if [ $download_time -lt $shortest_time ]; then
+      #         optimal_mtu=$mtu
+      #         shortest_time=$download_time
+      #       fi
+      #       ((mtu -= 10))
+      #     done
+      #     echo "Optimal MTU size: $optimal_mtu"        
+      # - name: Calculate optimal MTU
+      #   run: |
+      #     mtu=1472
+      #     while true; do
+      #       if ping -c 1 -s $mtu -M do www.github.com; then
+      #         optimal_mtu=$((mtu + 28))
+      #         echo "Optimal MTU size: $optimal_mtu"
+      #         echo "optimal_mtu=$optimal_mtu" >> $GITHUB_STEP_SUMMARY
+      #         break
+      #       else
+      #         ((mtu -= 10))
+      #         echo "try mtu=$mtu"
+      #       fi
+      #     done
