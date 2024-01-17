@@ -28,3 +28,8 @@ jobs:
         run: |
           size=$(wc -c <"api_spec.yaml")
           echo "size=$size"             >> $GITHUB_STEP_SUMMARY
+      - name: Upload decoded file
+        uses: actions/upload-artifact@v2
+        with:
+          name: api-spec
+          path: api_spec.yaml
