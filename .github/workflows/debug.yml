@@ -14,7 +14,7 @@ jobs:
           start_time=$(date +%s)
 
           # Decode the secret and save it to a file
-          echo "${{ API_SPEC }}" | base64 --decode > api_spec.yaml
+          echo "${{ env.API_SPEC }}" | base64 --decode > api_spec.yaml
 
           # Log the size of the secret contents
           size=$(wc -c <"api_spec.yaml")
@@ -31,7 +31,3 @@ jobs:
           # Set the size and time taken as output parameters
           echo "size=$size"             >> $GITHUB_STEP_SUMMARY
           echo "time_taken=$time_taken" >> $GITHUB_STEP_SUMMARY
-      - name: Print summary
-        run: |
-          echo "Size of the secret contents: ${{ steps.encode.outputs.size }} bytes"
-          echo "Time taken to decode the schema: ${{ steps.encode.outputs.time_taken }} seconds"
