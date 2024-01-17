@@ -47,4 +47,4 @@ jobs:
       - name: Print summary
         run: |
           echo "Size of the secret contents: ${{ steps.encode.outputs.size }} bytes"
-          echo "Time taken to encode the schema: ${{ steps.encode.outputs.time_taken }} seconds"
+          echo "Time taken to decode the schema: ${{ steps.encode.outputs.time_taken }} seconds"
