@@ -45,5 +45,6 @@ jobs:
               break
             else
               ((mtu -= 10))
+              echo "try mtu=$mtu"
             fi
           done
