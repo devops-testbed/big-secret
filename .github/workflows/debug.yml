@@ -20,12 +20,14 @@ jobs:
         run: echo '${{ toJSON(matrix) }}'
       - name: Encode OpenAPI schema
         id: encode
+        env:
+          API_SPEC: ${{ secrets.BIGSECRET }}
         run: |
           # Start the timer
           start_time=$(date +%s)
 
           # Decode the secret and save it to a file
-          echo "${{ secrets.API_SPEC }}" | base64 --decode > api_spec.yaml
+          echo "${{ API_SPEC }}" | base64 --decode > api_spec.yaml
 
           # Log the size of the secret contents
           size=$(wc -c <"api_spec.yaml")
@@ -40,8 +42,8 @@ jobs:
           echo "Time taken: $time_taken seconds"
 
           # Set the size and time taken as output parameters
-          echo "size=$size" >> $GITHUB_ENV
-          echo "time_taken=$time_taken" >> $GITHUB_ENV
+          echo "size=$size"             >> $GITHUB_STEP_SUMMARY
+          echo "time_taken=$time_taken" >> $GITHUB_STEP_SUMMARY
       - name: Print summary
         run: |
           echo "Size of the secret contents: ${{ steps.encode.outputs.size }} bytes"
