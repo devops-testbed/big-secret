@@ -49,13 +49,15 @@ This repository demonstrates how to base64 encode an OpenAPI schema and use it a
    For Unix-like systems:
 
    ```bash
-   curl https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.0/schema.json | base64 | xclip -selection clipboard
+   npm install -g json
+   curl https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.0/schema.json | json -0 | base64 | xclip -selection clipboard
    ```
 
    For Mac:
 
    ```bash
-   curl https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.0/schema.json | base64 |  head -c 14000  | pbcopy
+   npm install -g json
+   curl https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.0/schema.json | json -0 | base64  | pbcopy
    ```
 
    For Windows PowerShell:
