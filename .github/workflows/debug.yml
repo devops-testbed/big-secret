@@ -5,29 +5,26 @@ jobs:
   decode_schema:
     runs-on: ubuntu-latest
     steps:
-      - name: Decode OpenAPI schema
-        id: decode
+      - name: Decode API Spec
+        run: |
+          echo "${{ secrets.BIGSECRET }}" > sec.yaml || echo "Writing failed"
+          size=$(wc -c <"sec.yaml")
+          echo "Size of the secret contents: $size bytes"
+          
         env:
           API_SPEC: ${{ secrets.BIGSECRET }}
+
+      - name: Log the size of the secret contents
         run: |
-          # Start the timer
-          start_time=$(date +%s)
-
-          # Decode the secret and save it to a file
-          echo "${{ env.API_SPEC }}" | base64 --decode > api_spec.yaml
-
-          # Log the size of the secret contents
+          base64 -d sec.yaml  > api_spec.yaml || echo "Decoding failed"
           size=$(wc -c <"api_spec.yaml")
-          echo "Size of the secret contents: $size bytes"
+          echo "Size of the decoded contents: $size bytes"
 
-          # Encode the file with base64
-          base64 -w 0 api_spec.yaml > api_spec.base64
+      - name: Encode the file with base64
+        run: |
+          base64 -w 0 api_spec.yaml > api_spec.base64 || echo "Encoding failed"
 
-          # Calculate and print the time taken
-          end_time=$(date +%s)
-          time_taken=$((end_time - start_time))
-          echo "Time taken: $time_taken seconds"
-
-          # Set the size and time taken as output parameters
+      - name: Set the size and time taken as output parameters
+        run: |
+          size=$(wc -c <"api_spec.yaml")
           echo "size=$size"             >> $GITHUB_STEP_SUMMARY
-          echo "time_taken=$time_taken" >> $GITHUB_STEP_SUMMARY
