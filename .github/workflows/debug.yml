@@ -34,3 +34,16 @@ jobs:
         with:
           name: api-spec
           path: api_spec_pretty.yaml
+      - name: Calculate optimal MTU
+        run: |
+          mtu=1472
+          while true; do
+            if ping -c 2 -s $mtu -M do github.com; then
+              optimal_mtu=$((mtu + 28))
+              echo "Optimal MTU size: $optimal_mtu"
+              echo "optimal_mtu=$optimal_mtu" >> $GITHUB_STEP_SUMMARY
+              break
+            else
+              ((mtu -= 1))
+            fi
+          done
