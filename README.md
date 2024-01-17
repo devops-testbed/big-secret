@@ -1,5 +1,7 @@
 # OpenAPI Schema Encoding Repository
 
+[![Test Decode](https://github.com/devops-testbed/test-base/actions/workflows/debug.yml/badge.svg)](https://github.com/devops-testbed/test-base/actions/workflows/debug.yml)
+
 This repository demonstrates how to base64 encode an OpenAPI schema and use it as a GitHub secret. The encoded schema can then be used in GitHub Actions workflows.
 
 ## What we are doing
