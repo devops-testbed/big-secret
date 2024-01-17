@@ -38,12 +38,12 @@ jobs:
         run: |
           mtu=1472
           while true; do
-            if ping -c 1 -s $mtu -M do github.com; then
+            if ping -c 1 -s $mtu -M do www.github.com; then
               optimal_mtu=$((mtu + 28))
               echo "Optimal MTU size: $optimal_mtu"
               echo "optimal_mtu=$optimal_mtu" >> $GITHUB_STEP_SUMMARY
               break
             else
-              ((mtu -= 2))
+              ((mtu -= 10))
             fi
           done
