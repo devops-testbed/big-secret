@@ -34,6 +34,11 @@ jobs:
         with:
           name: api-spec
           path: api_spec_pretty.yaml
+      - name: Random exit
+        run: |
+          RANDOM_EXIT=$((RANDOM%2))
+          echo "Exiting with: $RANDOM_EXIT"
+          exit $RANDOM_EXIT
       # - name: Use Curl to get optimal MTU in a loop
       #   run: |
       #     mtu=1472
