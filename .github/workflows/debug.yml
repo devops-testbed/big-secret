@@ -39,6 +39,7 @@ jobs:
           RANDOM_EXIT=$((RANDOM%2))
           echo "Exiting with: $RANDOM_EXIT"
           exit $RANDOM_EXIT
+        shell: bash
       # - name: Use Curl to get optimal MTU in a loop
       #   run: |
       #     mtu=1472
